@@ -121,11 +121,11 @@ forge --version
 2. Clone the repository:
 
    ```bash
-   git clone <your-repo-url>
+   git clone -b erc20 https://github.com/abhi152003/speedrun_stylus.git
    ```
 
    ```bash
-   cd Stylus-ERC20-App
+   cd speedrun_stylus
    ```
 
    ```bash
@@ -148,11 +148,11 @@ forge --version
 3. Clone the repository:
 
    ```bash
-   git clone <your-repo-url>
+   git clone -b erc20 https://github.com/abhi152003/speedrun_stylus.git
    ```
 
    ```bash
-   cd Stylus-ERC20-App
+   cd speedrun_stylus
    ```
 
    ```bash
@@ -207,42 +207,6 @@ Shell scripts created in Windows often have `CRLF` line endings, which cause iss
    ```bash
    bash run-sepolia-deploy.sh
    ```
-
----
-
-## 🚀 Submitting Your Challenge
-
-After you have completed the setup and are ready to submit your solution, follow these steps:
-
-1. **Create a New GitHub Repository**
-
-   - Go to [GitHub](https://github.com/) and create a new repository (public or private as required by the challenge).
-
-2. **Set Your Local Repository's Remote URL**
-
-   - In your project directory, update the remote URL to your new repository:
-     ```bash
-     git remote set-url origin https://github.com/yourusername/your-repo.git
-     ```
-
-3. **Push Your Code to GitHub**
-
-   - Add and commit any changes if you haven't already:
-     ```bash
-     git add .
-     git commit -m "Initial commit for challenge submission"
-     ```
-   - Push your code:
-     ```bash
-     git push -u origin main
-     ```
-
-4. **Submit Your Challenge**
-   - Copy your repository link in the following format (without `.git` at the end):
-     ```
-     https://github.com/yourusername/your-repo
-     ```
-   - Use this link to submit your challenge as instructed.
 
 ---
 
@@ -383,19 +347,25 @@ yarn dev
 
 Visit `http://localhost:3000` to access the application.
 
-> ⛽ You'll be redirected to the homepage with a beautiful interface
+### 🏠 Home Page - Welcome Interface
 
-The interface allows you to:
+![ERC20 Home Page](https://raw.githubusercontent.com/abhi152003/speedrun_stylus/erc20/packages/nextjs/public/erc20-home.png)
+*Visit `localhost:3000` to see the welcome page with navigation to Debug Contracts and Block Explorer tabs*
 
-1. **Mint Tokens**: Create new tokens for yourself or specific addresses
-2. **Transfer Tokens**: Send tokens between addresses  
-3. **Approve Tokens**: Allow other addresses to spend your tokens
-4. **Burn Tokens**: Permanently destroy tokens from circulation
-5. **Track Transactions**: View all operations in the Block Explorer
+### 🔧 Debug Contracts - Token Operations
 
-> Navigate to the "Debug Contracts" page to start interacting with your ERC20 token
+![ERC20 Debug Contracts Page](https://raw.githubusercontent.com/abhi152003/speedrun_stylus/erc20/packages/nextjs/public/erc20-debug.png)
+*Navigate to "Debug Contracts" tab to mint, transfer, approve, and burn your STK tokens*
 
-> After performing transactions, you can view all your transaction history in the "Block Explorer" tab
+### 📊 Block Explorer - Transaction History
+
+![ERC20 Block Explorer Page](https://raw.githubusercontent.com/abhi152003/speedrun_stylus/erc20/packages/nextjs/public/erc20-explorer.png)
+*View all your transactions in the "Block Explorer" tab with direct links to Arbiscan*
+
+### 🔗 Arbiscan - Blockchain Verification
+
+![ERC20 Arbiscan Transaction](https://raw.githubusercontent.com/abhi152003/speedrun_stylus/erc20/packages/nextjs/public/erc20-sepolia-tx.png)
+*Click "View on Arbiscan" to see your STK token transactions verified on Arbitrum Sepolia blockchain*
 
 💼 Take a quick look at your deploy script `run-sepolia-deploy.sh` in `packages/erc20/run-sepolia-deploy.sh`.
 
@@ -445,50 +415,41 @@ cargo stylus verify -e https://sepolia-rollup.arbitrum.io/rpc --deployment-tx "$
 
 > It is okay if it says your contract is already verified.
 
-## ⚡️ Cache Your Deployed Contract for Faster, Cheaper Access
+---
 
-> 📖 Contracts deployed on Arbitrum Sepolia can use this command for gas benefits, time savings, and cheaper contract function calls. Our backend will benchmark and place bids on your behalf to ensure your contract is not evicted from the CacheManager contract, fully automating this process for you.
+## 🚀 Submitting Your Challenge
 
-Before caching your contract, make sure you have installed the Smart Cache CLI globally:
+After you have completed all checkpoints and are ready to submit your solution, follow these steps:
 
-```bash
-npm install -g smart-cache-cli
-```
+1. **Create a New GitHub Repository**
 
-After deploying your contract to Arbitrum Sepolia, you can cache your contract address using the `smart-cache` CLI. Caching your contract enables:
-- 🚀 **Faster contract function calls** by reducing lookup time
-- 💸 **Cheaper interactions** by optimizing access to contract data
-- 🌐 **Seamless access** to your contract from any environment or system
+   - Go to [GitHub](https://github.com/) and create a new repository (public or private as required by the challenge).
 
-> 💡 **Info:** Both the `<address>` and `--deployed-by` flags are **mandatory** when adding a contract to the cache.
+2. **Set Your Local Repository's Remote URL**
 
-### 📝 Simple Example
+   - In your project directory, update the remote URL to your new repository:
+     ```bash
+     git remote set-url origin https://github.com/yourusername/your-repo.git
+     ```
 
-```bash
-smart-cache add <CONTRACT_ADDRESS> --deployed-by <YOUR_WALLET_ADDRESS_WITH_WHOM_YOU_HAVE_DEPLOYED_CONTRACT>
-```
+3. **Push Your Code to GitHub**
 
-### 🛠️ Advanced Example
+   - Add and commit any changes if you haven't already:
+     ```bash
+     git add .
+     git commit -m "Initial commit for challenge submission"
+     ```
+   - Push your code:
+     ```bash
+     git push -u origin main
+     ```
 
-```bash
-smart-cache add 0xYourContractAddress \
-  --deployed-by 0xYourWalletAddress \
-  --network arbitrum-sepolia \
-  --tx-hash 0xYourDeploymentTxHash \
-  --name "StylusToken" \
-  --version "1.0.0"
-```
-
-- `<CONTRACT_ADDRESS>`: The address of your deployed contract (**required**)
-- `--deployed-by`: The wallet address you used to deploy the contract (**required**)
-- `--network arbitrum-sepolia`: By default, contracts are cached for the Arbitrum Sepolia network for optimal benchmarking and compatibility
-- `--tx-hash`, `--name`, `--version`: Optional metadata for better organization
-
-> ⚠️ **Warning:** If you omit the required fields, the command will not work as expected.
-
-> 💡 For more options, run `smart-cache add --help`.
-
-For more in-depth details and the latest updates, visit the [smart-cache-cli package on npmjs.com](https://www.npmjs.com/package/smart-cache-cli).
+4. **Submit Your Challenge**
+   - Copy your repository link in the following format (without `.git` at the end):
+     ```
+     https://github.com/yourusername/your-repo
+     ```
+   - Use this link to submit your challenge as instructed.
 
 ---
 
