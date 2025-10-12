@@ -1,9 +1,7 @@
 {
   "name": "Speedrun Stylus Dev Environment",
   "image": "meetpaladiya44/speedrun-codespaces:0.1",
-  "containerUser": "vscode",
   "remoteUser": "vscode",
-  "runArgs": ["--platform=linux/amd64"],
   "hostRequirements": {
     "cpus": 4,
     "memory": "16gb",
