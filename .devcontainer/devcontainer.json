@@ -43,7 +43,7 @@
   },
   "postCreateCommand": "bash -lc \"echo '🔍 Verifying pre-installed tools...' && node --version && yarn --version && rustc --version && cargo --version && (cargo-stylus --version || true) && (forge --version || true) && echo '✅ Tools verified'; if [ -f yarn.lock ]; then echo '📦 Installing yarn dependencies...' && yarn install --frozen-lockfile; else echo 'ℹ️ yarn.lock not found — skipping install'; fi\"",
   "postStartCommand": "echo '✅ Codespace started — ready.'",
-  "postAttachCommand": "git config --global --add safe.directory /workspace || true",
+  "postAttachCommand": "bash -lc \"git config --global --add safe.directory '${containerWorkspaceFolder:-/workspace}' || true\"",
   "forwardPorts": [3000, 8545, 5173],
   "portsAttributes": {
     "3000": {
@@ -64,5 +64,14 @@
     "CARGO_TERM_COLOR": "always",
     "CARGO_INCREMENTAL": "1"
   },
-  "workspaceFolder": "/workspace"
+
+  // IMPORTANT: explicitly mount the repo into /workspace and use the container variable
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+
+  // Optional: if Codespaces mounts in /workspaces/<repo>, the variable below will open that automatically
+  // "workspaceFolder": "${containerWorkspaceFolder}",
+
+  // keep the user you had
+  "remoteUser": "vscode"
 }
