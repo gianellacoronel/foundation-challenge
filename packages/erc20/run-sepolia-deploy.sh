@@ -56,12 +56,25 @@ fi
 echo "Connected to Arbitrum Sepolia!"
 
 echo "Deploying the Stylus contract using cargo stylus..."
-deploy_output=$(cargo stylus deploy -e "${SEPOLIA_RPC_URL}" --private-key "${PRIVATE_KEY}" --no-verify 2>&1) || true
+# Use a temporary file to capture output while also streaming it to stdout (so the user sees prompts)
+temp_deploy_log=$(mktemp)
 
-# If cargo stylus failed, exit with helpful output
-if [[ $? -ne 0 ]]; then
+# Run resource check first to save time if we know it will fail? 
+# No, let's just run deploy. We use `set +e` locally to handle the error manually
+set +e
+cargo stylus deploy -e "${SEPOLIA_RPC_URL}" --private-key "${PRIVATE_KEY}" --no-verify 2>&1 | tee "$temp_deploy_log"
+deploy_status=${PIPESTATUS[0]} # Capture exit code of cargo stylus
+set -e
+
+# Read the output into the variable for parsing
+deploy_output=$(cat "$temp_deploy_log")
+# Remove the temp file
+rm "$temp_deploy_log"
+
+# Check if deployment was successful
+if [[ $deploy_status -ne 0 ]]; then
     echo "Error: Contract deployment failed"
-    echo "Deploy output: $deploy_output"
+    # Output is already shown to user via tee
     exit 1
 fi
 
