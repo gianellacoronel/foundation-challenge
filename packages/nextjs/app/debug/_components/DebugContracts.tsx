@@ -6,7 +6,7 @@ import { IStylusToken } from "./IStylusToken";
 import { ethers } from "ethers";
 import { useGlobalState } from "~~/services/store/store";
 
-const contractAddress = "0xb96f1123b36b405e79d0e721ca5d9acd7ca99d49"; // Get this from run-dev-node.sh output
+const contractAddress = "0xaa59da4589c03db85349835c18d1a19b76236eb1"; // Get this from run-dev-node.sh output
 const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL || "");
 const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY || "";
 const signer = new ethers.Wallet(privateKey, provider);
